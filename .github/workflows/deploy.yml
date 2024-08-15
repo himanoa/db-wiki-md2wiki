@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: "20"
       - run: corepack enable
-      - run: pnpm instal
+      - run: pnpm install
       - run: pnpm build
       - name: Deploy to GitHub Pages
         id: deployment

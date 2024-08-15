@@ -1,0 +1,19 @@
+on:
+  push
+name: Deploy
+jobs:
+  build:
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+      - run: corepack enable pnpm
+      - run: pnpm install --immutable 
+      - run: pnpm build
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+

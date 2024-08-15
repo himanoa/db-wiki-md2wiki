@@ -1,5 +1,9 @@
 import { describe, it, expect } from 'vitest'
-import { toWikiText } from '.'
+import { toWikiPlugin, toWikiText } from '.'
+import remarkParse from 'remark-parse'
+import {unified} from 'unified'
+import { readFileSync } from 'fs'
+import { join } from 'path'
 
 describe("toWikiText", () => {
   it('should be plain text', () => {
@@ -15,7 +19,7 @@ describe("toWikiText", () => {
           value: 'fooo'
         }
       ]
-    }]})).toStrictEqual("<blockquote>fooo</blockquote>")
+    }]})).toStrictEqual("<blockquote>fooo\n</blockquote>")
   })
 
   it('should be codeblock text', () => {
@@ -28,32 +32,32 @@ describe("toWikiText", () => {
     expect(toWikiText()({ type: 'heading', depth: 1, children:[ {
       type: 'text',
       value: 'foo'
-    } ]})).toStrictEqual(`= foo =`)
+    } ]})).toStrictEqual(`= foo =\n`)
 
     expect(toWikiText()({ type: 'heading', depth: 2, children:[ {
       type: 'text',
       value: 'foo'
-    } ]})).toStrictEqual(`== foo ==`)
+    } ]})).toStrictEqual(`== foo ==\n`)
 
     expect(toWikiText()({ type: 'heading', depth: 3, children:[ {
       type: 'text',
       value: 'foo'
-    } ]})).toStrictEqual(`=== foo ===`)
+    } ]})).toStrictEqual(`=== foo ===\n`)
 
     expect(toWikiText()({ type: 'heading', depth: 4, children:[ {
       type: 'text',
       value: 'foo'
-    } ]})).toStrictEqual(`==== foo ====`)
+    } ]})).toStrictEqual(`==== foo ====\n`)
 
     expect(toWikiText()({ type: 'heading', depth: 5, children:[ {
       type: 'text',
       value: 'foo'
-    } ]})).toStrictEqual(`===== foo =====`)
+    } ]})).toStrictEqual(`===== foo =====\n`)
 
     expect(toWikiText()({ type: 'heading', depth: 6, children:[ {
       type: 'text',
       value: 'foo'
-    } ]})).toStrictEqual(`====== foo ======`)
+    } ]})).toStrictEqual(`====== foo ======\n`)
   })
 
   it("should be ordered list", () => {
@@ -86,7 +90,11 @@ describe("toWikiText", () => {
           ]
         }
       ]
-    })).toStrictEqual("# foo\n# bar")
+    })).toMatchInlineSnapshot(`
+      "# foo
+      # bar
+      "
+    `)
 
     expect(toWikiText()({
       type: 'list',
@@ -134,7 +142,12 @@ describe("toWikiText", () => {
           ]
         }
       ]
-    })).toStrictEqual("# foo\n## nested\n# bar")
+    })).toMatchInlineSnapshot(`
+      "# foo
+      ## nested
+      # bar
+      "
+    `)
 
     expect(toWikiText()({
       type: 'list',
@@ -182,7 +195,12 @@ describe("toWikiText", () => {
           ]
         }
       ]
-    })).toStrictEqual("* foo\n** nested\n* bar")
+    })).toMatchInlineSnapshot(`
+      "* foo
+      ** nested
+      * bar
+      "
+    `)
   })
 
   it("should be strong", () => {
@@ -203,5 +221,11 @@ describe("toWikiText", () => {
         value: 'foo'
       }]
     })).toStrictEqual("''foo''")
+  })
+
+  it("integration test", async () => {
+    const body = readFileSync(join(__dirname, 'example-patch-note.md'), 'utf8')
+    const processed = String(await unified().use(remarkParse).use(toWikiPlugin).process(body))
+    expect(processed).toMatchSnapshot()
   })
 })

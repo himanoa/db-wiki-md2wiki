@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: corepack enable pnpm
-      - run: pnpm install --immutable 
+      - run: pnpm instal
       - run: pnpm build
       - name: Deploy to GitHub Pages
         id: deployment

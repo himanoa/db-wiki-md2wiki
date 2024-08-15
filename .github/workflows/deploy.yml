@@ -18,6 +18,13 @@ jobs:
       - run: corepack enable
       - run: pnpm install
       - run: pnpm build
+      - uses: actions/upload-artifact@v3
+        with:
+          name: page
+          path: dist
+      - uses: actions/upload-pages-artifact@v1
+        with:
+          path: dist
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

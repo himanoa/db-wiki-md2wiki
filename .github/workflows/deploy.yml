@@ -11,10 +11,9 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v4
+      - uses: pnpm/action-setup@v4
         with:
-          node-version: "20.14.0"
-      - run: corepack enable pnpm
+          version: 8
       - run: pnpm instal
       - run: pnpm build
       - name: Deploy to GitHub Pages

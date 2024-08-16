@@ -1,0 +1,13 @@
+.link {
+  text-decoration: none;
+  color: white;
+  &:hover {
+    color: white;
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}

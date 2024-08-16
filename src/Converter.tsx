@@ -22,9 +22,9 @@ export function Converter() {
 
   return (
     <div className={classes.container}>
-      <textarea style={{width: "50%", height: "700px"}} onChange={handleChangeRaw} defaultValue={raw}></textarea>
+      <textarea style={{width: "50%", height: '700px'}} onChange={handleChangeRaw} defaultValue={raw}></textarea>
       <span>→</span>
-      <textarea style={{width: "50%", height: "700px"}} disabled defaultValue={wikiText}></textarea>
+      <textarea style={{width: "50%", height: '700px'}} disabled defaultValue={wikiText}></textarea>
     </div>
   )
 }

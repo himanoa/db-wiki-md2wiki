@@ -3,6 +3,7 @@ import { MainPage } from './pages/Main'
 import { Route, Router, Switch } from 'wouter'
 import { Header } from './components/Header'
 import { Layout } from './components/Layout'
+import { ChangelogPage } from './pages/Changelog'
 
 const queryClient = new QueryClient()
 
@@ -15,6 +16,7 @@ function App() {
           <Router base="/db-wiki-md2wiki">
             <Switch>
               <Route path="/"><MainPage /></Route>
+              <Route path="/changelog"><ChangelogPage /></Route>
             </Switch>
           </Router>
         }

@@ -6,11 +6,11 @@ type ContainerProps = {
 }
 
 export function ChangelogContainer({ render }: ContainerProps) {
-  const changelogUrl = 'https://raw.githubusercontent.com/himanoa/db-wiki-md2wiki/main/README.md'
+  const changelogUrl = 'https://raw.githubusercontent.com/himanoa/db-wiki-md2wiki/main/CHANGELOG.md'
   const { data: changelogMarkdown } = useSuspenseQuery({
     queryKey: ['changelog'],
     queryFn: async () => {
-      return fetch(changelogUrl).then(res => String(res.body))
+      return fetch(changelogUrl).then(res => res.text())
     }
   })
 

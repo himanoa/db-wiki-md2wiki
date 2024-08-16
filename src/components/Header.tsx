@@ -1,4 +1,4 @@
-import { Alignment, Button, Colors, Navbar, NavbarDivider, NavbarGroup, NavbarHeading } from "@blueprintjs/core";
+import { Alignment, Colors, Navbar, NavbarDivider, NavbarGroup, NavbarHeading } from "@blueprintjs/core";
 import { Link } from "wouter";
 import classes from './Header.module.css'
 
